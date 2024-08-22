@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Writing DOM</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label, input {
+            width: 100%;
+            margin: 5px 0;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+const form = document.createElement('form');
+
+const firstNameLabel = document.createElement('label');
+firstNameLabel.innerText = 'First Name: ';
+const firstNameInput = document.createElement('input');
+firstNameInput.type = 'text';
+firstNameInput.name = 'firstName';
+form.appendChild(firstNameLabel);
+form.appendChild(firstNameInput);
+
+const lastNameLabel = document.createElement('label');
+lastNameLabel.innerText = 'Last Name: ';
+const lastNameInput = document.createElement('input');
+lastNameInput.type = 'text';
+lastNameInput.name = 'lastName';
+form.appendChild(lastNameLabel);
+form.appendChild(lastNameInput);
+
+const emailLabel = document.createElement('label');
+emailLabel.innerText = 'Email: ';
+const emailInput = document.createElement('input');
+emailInput.type = 'email';
+emailInput.name = 'email';
+const emailWarning = document.createElement('span');
+emailWarning.style.color = 'red';
+emailWarning.innerText = ' Invalid email address';
+emailWarning.style.display = 'none';
+form.appendChild(emailLabel);
+form.appendChild(emailInput);
+form.appendChild(emailWarning);
+
+const passwordLabel = document.createElement('label');
+passwordLabel.innerText = 'Password: ';
+const passwordInput = document.createElement('input');
+passwordInput.type = 'password';
+passwordInput.name = 'password';
+form.appendChild(passwordLabel);
+form.appendChild(passwordInput);
+
+const confirmPasswordLabel = document.createElement('label');
+confirmPasswordLabel.innerText = 'Confirm Password: ';
+const confirmPasswordInput = document.createElement('input');
+confirmPasswordInput.type = 'password';
+confirmPasswordInput.name = 'confirmPassword';
+const passwordWarning = document.createElement('span');
+passwordWarning.style.color = 'red';
+passwordWarning.innerText = ' Passwords do not match';
+passwordWarning.style.display = 'none';
+form.appendChild(confirmPasswordLabel);
+form.appendChild(confirmPasswordInput);
+form.appendChild(passwordWarning);
+
+const submitButton = document.createElement('button');
+submitButton.type = 'submit';
+submitButton.innerText = 'Register';
+form.appendChild(submitButton);
+
+document.getElementById('app').appendChild(form);
+
+emailInput.addEventListener('input', () => {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(emailInput.value)) {
+        emailWarning.style.display = 'inline';
+    } else {
+        emailWarning.style.display = 'none';
+    }
+});
+
+confirmPasswordInput.addEventListener('input', () => {
+    if (passwordInput.value !== confirmPasswordInput.value) {
+        passwordWarning.style.display = 'inline';
+    } else {
+        passwordWarning.style.display = 'none';
+    }
+});
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    if (emailWarning.style.display === 'none' && passwordWarning.style.display === 'none') {
+        alert('Form submitted successfully!');
+    } else {
+        alert('Please correct the errors before submitting.');
+    }
+});
+</script>
+
+</body>
+</html>
